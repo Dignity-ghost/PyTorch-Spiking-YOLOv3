@@ -1,9 +1,0 @@
-# **.gitignore
-*/.DS_Store
-*__pycache__
-**.log
-**.jpg
-**.png
-*runs
-*weights
-**results.txt
