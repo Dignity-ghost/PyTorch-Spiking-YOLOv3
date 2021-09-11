@@ -1,0 +1,4 @@
+classes=20
+train=../dataset/VOC/images/train/
+valid=../dataset/VOC/images/val/
+names=../dataset/VOC/voc.names
