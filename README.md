@@ -1,5 +1,14 @@
 # PyTorch-Spiking-YOLOv3
-A modified repository based on PyTorch-Spiking-YOLOv3([cwq159/PyTorch-Spiking-YOLOv3](https://github.com/cwq159/PyTorch-Spiking-YOLOv3)) and YOLOv3([ultralytics/yolov3](https://github.com/ultralytics/yolov3)), which make it suitable for VOC-dataset. There is no extra contribution, and thanks for the two authors above.
+A modified repository based on PyTorch-Spiking-YOLOv3([cwq159/PyTorch-Spiking-YOLOv3](https://github.com/cwq159/PyTorch-Spiking-YOLOv3)) and YOLOv3([ultralytics/yolov3](https://github.com/ultralytics/yolov3)), which makes it suitable for VOC-dataset. There is no extra contribution, and thanks for the two authors above.
+
+## Dataset
+VOC dataset should be the same state as PyTorch-Spiking-YOLOv3, such as:
+/parent
+  /dataset/VOC
+  /PyTorch-Spiking-YOLOv3
+Please get VOC.tar in dataset and upzip them.
+Use voc_label.py in dataset (from https://pjreddie.com/media/files/voc_label.py) to generate labels.
+Use rebuild_voc.py in VOC to make a new collection of VOCdatset in folder VOC.
 
 ## Introduction
 For spiking implementation, some operators in YOLOv2-Tiny have been converted equivalently. Please refer to yolov3-tiny-ours(\*).cfg in /cfg for details.
