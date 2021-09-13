@@ -10,22 +10,22 @@ For spiking implementation, some operators in YOLOv2-Tiny have been converted eq
 + 'batch_normalization'->'fuse_conv_and_bn'
 
 ## Usage
-Please refer to [ultralytics/yolov3](https://github.com/ultralytics/yolov3) for the basic usage for training, evaluation and inference. The main advantage of PyTorch-Spiking-YOLOv3 is the transformation from ANN to SNN.
+Please refer to [ultralytics/yolov3](https://github.com/ultralytics/yolov3) for the basic usage for training, evaluation and inference. 
 ### Train
 ```
-$ python3 train.py --batch-size 32 --cfg cfg/yolov3-tiny-ours.cfg --data data/coco.data --weights ''
+$ python3 train.py
 ```
 ### Test
 ```
-$ python3 test.py --cfg cfg/yolov3-tiny-ours.cfg --data data/coco.data --weights weights/best.pt --batch-size 32 --img-size 640
+$ python3 test.py
 ```
 ### Detect
 ```
-$ python3 detect.py --cfg cfg/yolov3-tiny-ours.cfg --weights weights/best.pt --img-size 640
+$ python3 detect.py
 ```
 ### Transform
 ```
-$ python3 ann_to_snn.py --cfg cfg/yolov3-tiny-ours.cfg --data data/coco.data --weights weights/best.pt --timesteps 128
+$ python3 ann_to_snn.py
 ```
 For higher accuracy(mAP), you can try to adjust some hyperparameters.
 
