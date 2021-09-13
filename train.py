@@ -396,7 +396,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=600)  # 500200 batches at bs 16, 117263 COCO images = 273 epochs
     parser.add_argument('--batch-size', type=int, default=100)  # effective bs = batch_size * accumulate = 16 * 4 = 64
-    parser.add_argument('--cfg', type=str, default='cfg/voc-yolov2-mytiny.cfg', help='*.cfg path')
+    parser.add_argument('--cfg', type=str, default='cfg/voc-yolov2-tiny-nopool.cfg', help='*.cfg path')
     parser.add_argument('--data', type=str, default='data/voc.data', help='*.data path')
     parser.add_argument('--multi-scale', action='store_true', help='adjust (67%% - 150%%) img_size every 10 batches')
     parser.add_argument('--img-size', nargs='+', type=int, default=[416, 416], help='[min_train, max-train, test]')
