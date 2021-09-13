@@ -1,5 +1,9 @@
 # PyTorch-Spiking-YOLOv3
 A modified repository based on PyTorch-Spiking-YOLOv3([cwq159/PyTorch-Spiking-YOLOv3](https://github.com/cwq159/PyTorch-Spiking-YOLOv3)) and YOLOv3([ultralytics/yolov3](https://github.com/ultralytics/yolov3)), which makes it suitable for VOC-dataset and YOLOv2. There is no extra contribution, and thanks for the two authors above. It is feasible for CNN training and testing and SNN testing.
+For yolov2 or yolov3 training, it is useful to refer https://github.com/ultralytics/yolov3/issues/1570 and get original code as below:
+``` bash
+$ git clone https://github.com/ultralytics/yolov3 -b archive  # archive branch
+```
 
 ## Dataset
 VOC dataset should be the same state as PyTorch-Spiking-YOLOv3, such as:
