@@ -150,11 +150,11 @@ def ann_evaluate(opt,
             stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), tcls))
 
         # Plot images
-        if batch_i < 1:
-            f = 'test_batch%g_gt.jpg' % batch_i  # filename
-            plot_images(imgs, targets, paths=paths, names=names, fname=f)  # ground truth
-            f = 'test_batch%g_pred.jpg' % batch_i
-            plot_images(imgs, output_to_target(output, width, height), paths=paths, names=names, fname=f)  # predictions
+        # if batch_i < 1:
+            # f = 'test_batch%g_gt.jpg' % batch_i  # filename
+            # plot_images(imgs, targets, paths=paths, names=names, fname=f)  # ground truth
+            # f = 'test_batch%g_pred.jpg' % batch_i
+            # plot_images(imgs, output_to_target(output, width, height), paths=paths, names=names, fname=f)  # predictions
 
     # Compute statistics
     stats = [np.concatenate(x, 0) for x in zip(*stats)]  # to numpy
@@ -364,11 +364,11 @@ def snn_evaluate(opt,
             stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), tcls))
 
         # Plot images
-        if batch_i < 1:
-            f = 'test_batch%g_gt.jpg' % batch_i  # filename
-            plot_images(imgs, targets, paths=paths, names=names, fname=f)  # ground truth
-            f = 'test_batch%g_pred.jpg' % batch_i
-            plot_images(imgs, output_to_target(output, width, height), paths=paths, names=names, fname=f)  # predictions
+        # if batch_i < 1:
+            # f = 'test_batch%g_gt.jpg' % batch_i  # filename
+            # plot_images(imgs, targets, paths=paths, names=names, fname=f)  # ground truth
+            # f = 'test_batch%g_pred.jpg' % batch_i
+            # plot_images(imgs, output_to_target(output, width, height), paths=paths, names=names, fname=f)  # predictions
 
         total_firing_ratios.append([_.mean().item() for _ in spike_tensor.firing_ratios])
         spike_tensor.firing_ratios = []
