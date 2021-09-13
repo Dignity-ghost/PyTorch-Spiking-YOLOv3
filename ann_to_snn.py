@@ -49,44 +49,48 @@ class ListWrapper(nn.Module):
         self.list = modulelist
 
     def forward(self, x):
-        for i in range(9):
+        # for i in range(9):
+        #     x = self.list[i](x)
+        # x1 = x  # route1
+        # for i in range(9, 13):
+        #     x = self.list[i](x)
+        # x2 = x  # route2
+        # y1 = self.list[13](x)  # branch1
+        # c = self.list[17](x2)
+        # c = self.list[18](c)
+        # x = torch.cat((c, x1), 1)
+        # y2 = self.list[20](x)  # branch2
+        # return y1, y2
+        for i in range(len(self.list) - 1):
             x = self.list[i](x)
-        x1 = x  # route1
-        for i in range(9, 13):
-            x = self.list[i](x)
-        x2 = x  # route2
-        y1 = self.list[13](x)  # branch1
-        c = self.list[17](x2)
-        c = self.list[18](c)
-        x = torch.cat((c, x1), 1)
-        y2 = self.list[20](x)  # branch2
-        return y1, y2
+        y = x
+        return y
 
 
 if __name__ == '__main__':
     # parse args
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg', type=str, default='cfg/yolov3-spp.cfg', help='*.cfg path')
-    parser.add_argument('--data', type=str, default='data/coco2017.data', help='*.data path')
-    parser.add_argument('--weights', type=str, default='weights/yolov3-spp-ultralytics.pt', help='initial weights path')
-    parser.add_argument('--batch-size', type=int, default=16, help='size of each image batch')
-    parser.add_argument('--img-size', nargs='+', type=int, default=[320, 640], help='[min_train, max-train, test]')
+    parser.add_argument('--cfg', type=str, default='cfg/voc-yolov2-tiny-nopool.cfg', help='*.cfg path')
+    parser.add_argument('--data', type=str, default='data/voc.data', help='*.data path')
+    parser.add_argument('--weights', type=str, default='weights/best.pt', help='initial weights path')
+    parser.add_argument('--batch-size', type=int, default=1, help='size of each image batch')
+    parser.add_argument('--img-size', nargs='+', type=int, default=[416, 416], help='[min_train, max-train, test]')
     parser.add_argument('--rect', action='store_true', help='rectangular training')
     parser.add_argument('--cache-images', action='store_true', help='cache images for faster training')
     parser.add_argument('--multi-scale', action='store_true', help='adjust (67%% - 150%%) img_size every 10 batches')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
-    parser.add_argument('--iou-thres', type=float, default=0.6, help='IOU threshold for NMS')
+    parser.add_argument('--iou-thres', type=float, default=0.5, help='IOU threshold for NMS')
     parser.add_argument('--save-json', action='store_true', help='save a cocoapi-compatible JSON results file')
     parser.add_argument('--task', default='test', help="'test', 'study', 'benchmark'")
     parser.add_argument('--single-cls', action='store_true', help='train as single-class dataset')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--statistics_iters', default=30, type=int, help='iterations for gather activation statistics')
-    parser.add_argument('--timesteps', '-T', default=16, type=int)
+    parser.add_argument('--timesteps', '-T', default=100, type=int)
     parser.add_argument('--reset_mode', default='subtraction', type=str, choices=['zero', 'subtraction'])
     parser.add_argument('--channel_wise', '-cw', action='store_true', help='transform in each channel')
     parser.add_argument('--save_file', default="yolov3-tiny-ours-snn", type=str,
                         help='the output location of the transferred weights')
-    parser.add_argument('--device', default='', help='device id (i.e. 0 or 0,1 or cpu)')
+    parser.add_argument('--device', default='0', help='device id (i.e. 0 or 0,1 or cpu)')
     opt = parser.parse_args()
     opt.save_json = opt.save_json or any([x in opt.data for x in ['coco.data', 'coco2014.data', 'coco2017.data']])
     opt.cfg = check_file(opt.cfg)  # check file

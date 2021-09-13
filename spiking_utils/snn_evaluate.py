@@ -271,18 +271,43 @@ def snn_evaluate(opt,
         # Disable gradients
         with torch.no_grad():
             # Run model
+            # t = torch_utils.time_synchronized()
+            # spike_tensor.firing_ratio_record = True
+            # output_snn1, output_snn2 = snn(data)  # two branches
+            # spike_tensor.firing_ratio_record = False
+            # output_ann1 = output_snn1.to_float()  # spike to real-value
+            # output_ann2 = output_snn2.to_float()
+            # # post-processing: conv, yolo
+            # output_ann1 = ann.module_list[14](output_ann1)
+            # output_ann2 = ann.module_list[-2](output_ann2)
+            # yolo_outputs, out = [], []
+            # yolo_outputs.append(ann.module_list[15](output_ann1, out))
+            # yolo_outputs.append(ann.module_list[-1](output_ann2, out))
+            # inf_out, _ = zip(*yolo_outputs)  # inference output, training output
+            # inf_out = torch.cat(inf_out, 1)  # cat yolo outputs
+            # if augment:  # de-augment results
+            #     inf_out = torch.split(inf_out, nb, dim=0)
+            #     inf_out[1][..., :4] /= s[0]  # scale
+            #     img_size = imgs.shape[-2:]  # height, width
+            #     inf_out[1][..., 0] = img_size[1] - inf_out[1][..., 0]  # flip lr
+            #     inf_out[2][..., :4] /= s[1]  # scale
+            #     inf_out = torch.cat(inf_out, 1)
+            # t0 += torch_utils.time_synchronized() - t
+
+            # # Run NMS
+            # t = torch_utils.time_synchronized()
+            # output = non_max_suppression(inf_out, conf_thres=conf_thres, iou_thres=iou_thres, multi_label=multi_label)
+            # t1 += torch_utils.time_synchronized() - t
+
             t = torch_utils.time_synchronized()
             spike_tensor.firing_ratio_record = True
-            output_snn1, output_snn2 = snn(data)  # two branches
+            output_snn = snn(data)  # two branches
             spike_tensor.firing_ratio_record = False
-            output_ann1 = output_snn1.to_float()  # spike to real-value
-            output_ann2 = output_snn2.to_float()
+            output_ann = output_snn.to_float()  # spike to real-value
             # post-processing: conv, yolo
-            output_ann1 = ann.module_list[14](output_ann1)
-            output_ann2 = ann.module_list[-2](output_ann2)
+            # output_ann = ann.module_list[15](output_ann)
             yolo_outputs, out = [], []
-            yolo_outputs.append(ann.module_list[15](output_ann1, out))
-            yolo_outputs.append(ann.module_list[-1](output_ann2, out))
+            yolo_outputs.append(ann.module_list[15](output_ann, out))
             inf_out, _ = zip(*yolo_outputs)  # inference output, training output
             inf_out = torch.cat(inf_out, 1)  # cat yolo outputs
             if augment:  # de-augment results
@@ -343,8 +368,8 @@ def snn_evaluate(opt,
 
                 # Per target class
                 for cls in torch.unique(tcls_tensor):
-                    ti = (cls == tcls_tensor).nonzero().view(-1)  # target indices
-                    pi = (cls == pred[:, 5]).nonzero().view(-1)  # prediction indices
+                    ti = (cls == tcls_tensor).nonzero(as_tuple=False).view(-1)  # target indices
+                    pi = (cls == pred[:, 5]).nonzero(as_tuple=False).view(-1)  # prediction indices
 
                     # Search for detections
                     if pi.shape[0]:
@@ -352,7 +377,7 @@ def snn_evaluate(opt,
                         ious, i = box_iou(pred[pi, :4], tbox[ti]).max(1)  # best ious, indices
 
                         # Append detections
-                        for j in (ious > iouv[0]).nonzero():
+                        for j in (ious > iouv[0]).nonzero(as_tuple=False):
                             d = ti[i[j]]  # detected target
                             if d not in detected:
                                 detected.append(d)
