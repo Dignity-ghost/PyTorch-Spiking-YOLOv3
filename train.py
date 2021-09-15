@@ -96,7 +96,7 @@ def train(hyp):
     for k, v in dict(model.named_parameters()).items():
         if '.bias' in k:
             pg2 += [v]  # biases
-        elif 'Conv2d.weight' in k:zhg
+        elif 'Conv2d.weight' in k:
             pg1 += [v]  # apply weight_decay
         else:
             pg0 += [v]  # all else
